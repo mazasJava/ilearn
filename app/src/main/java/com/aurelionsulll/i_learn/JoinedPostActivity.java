@@ -43,7 +43,6 @@ public class JoinedPostActivity extends AppCompatActivity {
             }
         });
 
-//        getPostDataCreatedByUser();
     }
 
     @Override
@@ -56,14 +55,12 @@ public class JoinedPostActivity extends AppCompatActivity {
             postList = new ArrayList<Post>();
             if (task.isSuccessful()) {
                 Post post = task.getResult().toObject(Post.class);
-                post.setTitle(task.getResult().get("title").toString());
-                post.setDescription(task.getResult().get("description").toString());
-                post.setImage(task.getResult().get("image").toString());
+                post.setId(task.getResult().getId());
                 database.collection("users").document(post.getUser_id()).get().addOnSuccessListener(documentSnapshot -> {
                         User user = getUserData(documentSnapshot);
                         post.setUser(user);
                         postList.add(post);
-                        mAdapter = new CustomRecyclerAdapter(JoinedPostActivity.this, postList);
+                        mAdapter = new CustomRecyclerAdapterJoinedPosts(JoinedPostActivity.this, postList);
                         recyclerView.setAdapter(mAdapter);
                     });
 
