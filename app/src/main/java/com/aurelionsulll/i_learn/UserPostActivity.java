@@ -26,8 +26,6 @@ public class UserPostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
-//        ImageView interested = findViewById(R.id.interested);
-//        interested.setVisibility(View.INVISIBLE);
         recyclerView = (RecyclerView) findViewById(R.id.recycleViewContainer);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -52,7 +50,7 @@ public class UserPostActivity extends AppCompatActivity {
                         User user = getUserData(documentSnapshot);
                         post.setUser(user);
                         postList.add(post);
-                        mAdapter = new CustomRecyclerAdapter(UserPostActivity.this, postList);
+                        mAdapter = new CustomRecyclerAdapterUserPosts(UserPostActivity.this, postList);
                         recyclerView.setAdapter(mAdapter);
                     });
                 }

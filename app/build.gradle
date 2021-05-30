@@ -48,6 +48,11 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
 
+    implementation 'androidx.navigation:navigation-fragment:2.3.1'
+    implementation 'androidx.navigation:navigation-ui:2.3.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+
     testImplementation 'junit:junit:4.+'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

@@ -12,5 +12,9 @@
     <string name="action_logout">Logout</string>
     <string name="wwew">wwew</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">home</string>
+    <string name="title_home">home</string>
+    <string name="title_joined_post">Add post</string>
+    <string name="setup">setup</string>
+    <string name="title_setup">setup</string>
 </resources>
