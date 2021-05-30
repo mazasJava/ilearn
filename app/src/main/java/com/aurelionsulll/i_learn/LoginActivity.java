@@ -64,11 +64,11 @@ public class LoginActivity extends AppCompatActivity {
                     mAuth.signInWithEmailAndPassword(loginEmail, loginPassword).addOnCompleteListener(task -> {
                         //if success go to home page
                         if (task.isSuccessful()) {
-                            System.out.println("m here");
+                            Toast.makeText(LoginActivity.this, "LOGIN SUCCESS" , Toast.LENGTH_LONG).show();
                             sendToMain();
                         } else {
                             String error = task.getException().getMessage();
-                            Toast.makeText(LoginActivity.this, "Error : " + error, Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "LOGIN ERROR : " + error, Toast.LENGTH_LONG).show();
                         }
                     });
                 }

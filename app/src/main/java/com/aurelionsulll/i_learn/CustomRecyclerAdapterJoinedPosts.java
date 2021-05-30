@@ -70,7 +70,13 @@ public class CustomRecyclerAdapterJoinedPosts  extends RecyclerView.Adapter<Cust
             interested = (ImageView) itemView.findViewById(R.id.interested);
             image_profile = (ImageView) itemView.findViewById(R.id.image_profile);
             image_post = (ImageView) itemView.findViewById(R.id.image_post);
-            interested.setVisibility(View.GONE);
+            interested.setImageResource(R.drawable.ic_check_circle_green);
+//            interested.setVisibility(View.GONE);
+            interested.setOnClickListener(v->{
+//                itemView.setActivated(false);
+                interested.setImageResource(R.drawable.ic_add);
+            });
+
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, UpdateUser.class);
                 intent.putExtra("id", postId);

@@ -3,14 +3,14 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/home"
-        android:title="@string/title_home" />
+        android:title="" />
     <item
         android:id="@+id/navigation_add_post"
-        android:icon="@drawable/home"
-        android:title="@string/title_joined_post" />
+        android:icon="@drawable/ic_add"
+        android:title="" />
     <item
         android:id="@+id/navigation_setup"
-        android:icon="@drawable/home"
-        android:title="@string/title_setup" />
+        android:icon="@drawable/ic_profile"
+        android:title="" />
 
 </menu>

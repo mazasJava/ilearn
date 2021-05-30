@@ -80,18 +80,30 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
             interested = (ImageView) itemView.findViewById(R.id.interested);
             image_profile = (ImageView) itemView.findViewById(R.id.image_profile);
             image_post = (ImageView) itemView.findViewById(R.id.image_post);
+            interested.setImageResource(R.drawable.ic_add);
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             CollectionReference collection = db.collection("joined");
             //get the joined post by the current user
             Query getUserId = collection.whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
             getUserId.get().addOnCompleteListener(task -> {
-                    for (QueryDocumentSnapshot document : task.getResult())
-                        task.getResult().getQuery().whereEqualTo("postId", postId).addSnapshotListener((value, error) -> {
-                            if (document.get("postId").equals(postId))
-                                interested.setImageResource(R.drawable.ic_check_circle_green);
-                        });
+//                                         interested.setVisibility(View.GONE);
+//                for (QueryDocumentSnapshot document : task.getResult()){
+//                    interested.setVisibility(View.GONE);
+//                    task.getResult().getQuery().whereEqualTo("postId", postId).addSnapshotListener((value, error) -> {
+//                        if (document.get("postId").equals(postId)){
+//                            interested.setVisibility(View.VISIBLE);
+//                            interested.setImageResource(R.drawable.ic_check_circle_green);
+//                        }
+////                        else if(document.get("userId").equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+////                         interested.setVisibility(View.GONE);
+////                        else
+////                            interested.setImageResource(R.drawable.ic_add);
+//                    });
+//                }
+
             });
+//            Query get = collection.whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
 
             interested.setOnClickListener(v -> {
                 interested.setImageResource(R.drawable.ic_check_circle_green);

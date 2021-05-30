@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -152,6 +153,11 @@ public class AddPostFragment extends Fragment {
                 System.out.println(uri);
                 System.out.println(downloadUrl);
                 createPost(downloadUrl, title,description);
+                Fragment fragment = new FragmentHome();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.navHostFragment, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }));
         });
         return  view;
