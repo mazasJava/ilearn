@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -135,22 +136,26 @@ public class ProfileFragment extends Fragment {
         setupImage = view.findViewById(R.id.setup_image);
         setupName = view.findViewById(R.id.setup_name);
         setupBtn = view.findViewById(R.id.setup_btn);
+
         toJoinedPost = view.findViewById(R.id.toJoinedPost);
         toUserPost = view.findViewById(R.id.toUserPost);
 
         getUserData();
 
         toJoinedPost.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(),JoinedPostActivity.class);
-
-            startActivity(intent);
-
+            Fragment fragment = new JoinedPostFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.navHostFragment, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
+
         toUserPost.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(),UserPostActivity.class);
-
-            startActivity(intent);
-
+            Fragment fragment = new UserPostFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.navHostFragment, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
         setupBtn.setOnClickListener(v -> {

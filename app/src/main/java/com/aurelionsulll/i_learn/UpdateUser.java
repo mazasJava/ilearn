@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,9 +65,13 @@ public class UpdateUser extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), JoinedPostActivity.class);
             startActivity(intent);
         });
+
         cancelButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), JoinedPostActivity.class);
-            startActivity(intent);
+            FragmentHome fragment = new FragmentHome();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.navHostFragment, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         });
     }
 
