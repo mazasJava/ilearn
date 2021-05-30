@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">i-learn</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="todo">TODO</string>
+    <string name="create_one">Create One</string>
+    <string name="get_started">Get Started</string>
+    <string name="don_t_have_an_account">Don\'t have an account</string>
+    <string name="already_have_an_account">Already Have an Account?</string>
+    <string name="action_search">Search</string>
+    <string name="action_account">Account</string>
+    <string name="action_logout">Logout</string>
+    <string name="wwew">wwew</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

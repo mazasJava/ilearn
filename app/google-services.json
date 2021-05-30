@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "109028015463",
+    "project_id": "ilearn-b4282",
+    "storage_bucket": "ilearn-b4282.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109028015463:android:1da65b698943a95283c3c2",
+        "android_client_info": {
+          "package_name": "com.aurelionsulll.i_learn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "109028015463-90gc0t83jng2nci11mil5adp4juhmgpi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aurelionsulll.i_learn",
+            "certificate_hash": "89f1f0d2648f1975b3effd8dacde9e6be3bb51ee"
+          }
+        },
+        {
+          "client_id": "109028015463-gc66sdm4v73nnf6634agm08apr4t83sm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj9B4uN6hXuaaSmdGoxqt5DRjy5yorJAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "109028015463-gc66sdm4v73nnf6634agm08apr4t83sm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
