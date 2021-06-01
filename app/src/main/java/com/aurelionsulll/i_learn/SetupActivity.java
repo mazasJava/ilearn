@@ -90,7 +90,6 @@ public class SetupActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     final Uri downloadUrl = uri;
-                                    System.out.println("==================================================" + downloadUrl);
                                     createProfile(downloadUrl, user_name);
                                 }
                             });
@@ -125,7 +124,9 @@ public class SetupActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 assert result != null;
                 mainImageURI = result.getUri();
-                setupImage.setImageURI(mainImageURI);
+//                if(mainImageURI != null){
+                    setupImage.setImageURI(mainImageURI);
+//                }
                 isChanged = true;
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 assert result != null;
@@ -150,7 +151,11 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful())
-                    System.out.println("work");
+
+                {
+                    Intent intent = new Intent(SetupActivity.this,MainActivity.class);
+                    startActivity(intent);
+                }
                 else
                     System.out.println("not working");
             }
@@ -164,6 +169,7 @@ public class SetupActivity extends AppCompatActivity {
                 String name = documentSnapshot.getString("name");
                 String image = documentSnapshot.getString("image");
                 setupName.setText(name);
+                if(image != null)
                 Glide.with(SetupActivity.this).load(image).into(setupImage);
             }
         });
