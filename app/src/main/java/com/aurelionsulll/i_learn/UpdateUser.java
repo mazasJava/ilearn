@@ -62,16 +62,18 @@ public class UpdateUser extends AppCompatActivity {
                         System.out.println("not working");
                 }
             });
-            Intent intent = new Intent(getApplicationContext(), JoinedPostActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
         });
 
         cancelButton.setOnClickListener(v -> {
-            FragmentHome fragment = new FragmentHome();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.navHostFragment, fragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+//            FragmentHome fragment = new FragmentHome();
+//            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.navHostFragment, fragment);
+//            fragmentTransaction.addToBackStack(null);
+//            fragmentTransaction.commit();t
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         });
     }
 

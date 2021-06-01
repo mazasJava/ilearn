@@ -249,7 +249,11 @@ public class ProfileFragment extends Fragment {
                 String name = documentSnapshot.getString("name");
                 String image = documentSnapshot.getString("image");
                 setupName.setText(name);
+                if (isAdded())
+                {
+
                 Glide.with(getContext()).load(image).into(setupImage);
+                }
             }
         });
 

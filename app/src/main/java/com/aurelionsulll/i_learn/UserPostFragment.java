@@ -75,13 +75,15 @@ public class UserPostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_post, container, false);
-
+        if(isAdded()){
         recyclerView = (RecyclerView) view.findViewById(R.id.recycleViewContainer);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         database = FirebaseFirestore.getInstance();
-        getPostDataCreatedByUser();
+
+            getPostDataCreatedByUser();
+        }
 
         return view;
     }
