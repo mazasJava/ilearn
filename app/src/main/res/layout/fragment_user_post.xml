@@ -3,12 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserPostFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.UserPostFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/main_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3F51B5"
+        app:layout_constraintEnd_toEndOf="@id/recycleViewContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleViewContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:layout_marginBottom="70dp"
+        android:background="@color/mainbg"
+        app:layout_constraintBottom_toBottomOf="@id/main_tool_bar"
+        app:layout_constraintEnd_toEndOf="@id/main_tool_bar"
+        app:layout_constraintStart_toStartOf="@id/main_tool_bar"
+        app:layout_constraintTop_toBottomOf="@id/main_tool_bar" />
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/recycleViewContainer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"/>-->
 
 
 </FrameLayout>

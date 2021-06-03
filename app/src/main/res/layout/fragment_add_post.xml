@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddPostFragment">
+    tools:context=".fragments.AddPostFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/main_tool_bar"
@@ -19,7 +19,7 @@
         android:id="@+id/post_image"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="136dp"
         android:src="@drawable/insert_image2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -30,7 +30,9 @@
         android:id="@+id/post_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_weight="1"
         android:background="@android:drawable/editbox_background"
         android:gravity="top"
@@ -48,7 +50,9 @@
         android:id="@+id/post_description"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_weight="8"
         android:background="@android:drawable/editbox_background"
         android:gravity="top"
@@ -66,16 +70,18 @@
         android:id="@+id/post_btn_create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+
         android:background="@drawable/rounded_button"
         android:backgroundTint="@color/mainc"
-
-        android:text="Add"
+        android:text="Create new Post"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/post_description"
-        tools:layout_editor_absoluteX="0dp"
         app:backgroundTint="#EC615B"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

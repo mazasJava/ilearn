@@ -13,17 +13,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ilearn">
-        <activity android:name=".SetupActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".activitys.SetupActivity" />
+        <activity android:name=".activitys.RegisterActivity" />
+        <activity android:name=".activitys.LoginActivity" />
         <activity android:name=".PostController" />
         <activity android:name=".UserPostActivity" />
         <activity android:name=".JoinedPostActivity" />
-        <activity android:name=".UpdateUser" />
+        <activity android:name=".activitys.UpdateUserActivity" />
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>
         <activity android:name=".Feed"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".activitys.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
