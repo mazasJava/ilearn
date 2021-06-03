@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/setup_image"
         android:layout_width="166dp"
         android:layout_height="115dp"
@@ -39,14 +39,25 @@
 
     <EditText
         android:id="@+id/setup_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="273dp"
+        android:layout_height="53dp"
         android:layout_marginTop="96dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="#f5f5f5"
         android:text="Name"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setup_image" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="76dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="96dp"
+        android:src="@drawable/ic_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/setup_name"
         app:layout_constraintTop_toBottomOf="@+id/setup_image" />
 
     <Button
@@ -55,6 +66,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Joined posts"
+        android:background="@drawable/rounded_button"
+        app:backgroundTint="#EC615B"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setup_btn" />
 
@@ -63,6 +76,8 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_button"
+        app:backgroundTint="#EC615B"
         android:text="My posts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setup_btn" />

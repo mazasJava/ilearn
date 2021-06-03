@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="70dp"
         android:background="@color/mainbg"
         app:layout_constraintBottom_toBottomOf="@id/main_tool_bar"
         app:layout_constraintEnd_toEndOf="@id/main_tool_bar"
