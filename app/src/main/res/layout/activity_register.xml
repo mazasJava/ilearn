@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,21 +10,29 @@
     android:fontFamily="sans-serif"
     >
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imagelogo"
-        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo"
         android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:layout_marginTop="36dp"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imagelogo"
-        android:layout_marginTop="215dp"
-        android:orientation="vertical">
+        android:layout_marginTop="68dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagelogo"
+        app:layout_constraintVertical_bias="0.144"
+        tools:layout_editor_absoluteX="0dp">
 
 
         <EditText
@@ -40,10 +48,9 @@
             android:hint="Email"
             android:paddingHorizontal="18dp"
             android:paddingVertical="10dp"
-            android:textColorHint="@color/white"
-            android:textSize="20sp"
             android:textColor="@color/white"
-            />
+            android:textColorHint="@color/white"
+            android:textSize="20sp" />
 
 
         <EditText
@@ -76,13 +83,12 @@
             android:backgroundTint="@color/black"
             android:fontFamily="sans-serif-light"
             android:hint="Confirm Password"
+            android:inputType="textPassword"
             android:paddingHorizontal="18dp"
             android:paddingVertical="10dp"
-            android:textColorHint="@color/white"
-            android:textSize="20sp"
             android:textColor="@color/white"
-            android:inputType="textPassword"
-            />
+            android:textColorHint="@color/white"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/register"
@@ -109,6 +115,6 @@
             android:textColor="#52b788"
             android:textSize="17sp" />
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
