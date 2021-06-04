@@ -41,8 +41,6 @@ import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import org.w3c.dom.Text;
-
 import java.util.Objects;
 import java.util.UUID;
 
@@ -118,7 +116,7 @@ public class AddPostFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_add_post, container, false);
 
-        progressBar = view.findViewById(R.id.add_post_progressBar);
+        progressBar = view.findViewById(R.id.login_progressBar);
         mAuth = FirebaseAuth.getInstance();
 
         mainToolBar = view.findViewById(R.id.main_tool_bar);

@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.aurelionsulll.i_learn.activitys.LoginActivity;
@@ -36,12 +37,12 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  * Use the {@link FragmentHome#newInstance} factory method to
  * create an instance of this fragment.
- *
  */
 public class FragmentHome extends Fragment {
     private RecyclerView recyclerView;
     private MaterialToolbar mainToolBar;
     private FirebaseAuth mAuth;
+    private ProgressBar progressBar;
 
     public static RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
@@ -92,13 +93,15 @@ public class FragmentHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         mAuth = FirebaseAuth.getInstance();
+        progressBar = v.findViewById(R.id.home_progressBar);
 
         mainToolBar = v.findViewById(R.id.main_tool_bar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(mainToolBar);
-        ((AppCompatActivity)getActivity()).setTitle("I learn");
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mainToolBar);
+        ((AppCompatActivity) getActivity()).setTitle("I learn");
         mainToolBar.setTitleTextColor(Color.WHITE);
         mainToolBar.setBackground(Drawable.createFromPath("color/mainbgm"));
         setHasOptionsMenu(true);
+        progressBar.setVisibility(View.VISIBLE);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recycleViewContainer);
         recyclerView.setHasFixedSize(true);
@@ -113,7 +116,7 @@ public class FragmentHome extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -131,6 +134,7 @@ public class FragmentHome extends Fragment {
         mAuth.signOut();
         sendToLogin();
     }
+
     private void getPostData() {
         database.collection("posts").get().addOnCompleteListener(task -> {
             postList = new ArrayList<Post>();
@@ -145,6 +149,7 @@ public class FragmentHome extends Fragment {
                         mAdapter = new CustomRecyclerAdapter(getContext(), postList);
                         recyclerView.setAdapter(mAdapter);
                     });
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
 
             } else {

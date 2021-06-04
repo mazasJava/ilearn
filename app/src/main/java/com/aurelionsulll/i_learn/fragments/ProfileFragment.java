@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.aurelionsulll.i_learn.R;
@@ -60,6 +61,7 @@ public class ProfileFragment extends Fragment {
     private MaterialToolbar mainToolBar;
     private FirebaseAuth mAuth;
     private boolean isChanged = false;
+    private ProgressBar progressBar;
 
     private ImageView setupImage;
     private Uri mainImageURI = null;
@@ -119,6 +121,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
+        progressBar = view.findViewById(R.id.login_progressBar);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -164,6 +167,7 @@ public class ProfileFragment extends Fragment {
         });
 
         setupBtn.setOnClickListener(v -> {
+            progressBar.setVisibility(View.VISIBLE);
             String user_name = setupName.getText().toString();
             if (isChanged) {
                 if (!TextUtils.isEmpty(user_name)) {
@@ -177,6 +181,8 @@ public class ProfileFragment extends Fragment {
                                 public void onSuccess(Uri uri) {
                                     final Uri downloadUrl = uri;
                                     createProfile(downloadUrl, user_name);
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(getContext(), "Profile updated", Toast.LENGTH_LONG).show();
                                 }
                             });
                         }

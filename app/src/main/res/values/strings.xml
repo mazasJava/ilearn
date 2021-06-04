@@ -19,4 +19,6 @@
     <string name="title_setup">setup</string>
     <string name="save_your_profile">Create your profile</string>
     <string name="user_name">User name</string>
+    <string name="you_haven_t_joined_any_posts_yet">You haven\'t joined any post yet</string>
+    <string name="you_haven_t_created_any_posts_yet">you haven\'t created any posts yet</string>
 </resources>

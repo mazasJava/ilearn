@@ -54,6 +54,7 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
 //        holder.txtDate.setText(post.getDescription());
         holder.user_name.setText(String.valueOf(post.getUser().getName()));
         holder.postId = post.getId();
+        holder.postUserID = post.getUser_id();
         Glide.with(context).load(post.getUser().getImage()).into(holder.image_profile);
         Glide.with(context).load(post.getImage()).into(holder.image_post);
     }
@@ -72,6 +73,17 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
         public ImageView image_profile;
         public ImageView image_post;
         public String postId;
+        public String postUserID;
+        Boolean checked = false;
+
+
+        public Boolean getChecked() {
+            return checked;
+        }
+
+        public void setChecked(Boolean checked) {
+            this.checked = checked;
+        }
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -85,6 +97,7 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             CollectionReference collection = db.collection("joined");
+            CollectionReference postCollection = db.collection("posts");
 
 
             DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("joined");
@@ -93,22 +106,27 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
             //get the joined post by the current user
             Query getUserId = collection.whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
 
+
             getUserId.get().addOnCompleteListener(task -> {
-                for (QueryDocumentSnapshot document : task.getResult())
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    if (document.get("userId").equals(postUserID)) {
+                        interested.setVisibility(View.GONE);
+                    }
                     task.getResult().getQuery().whereEqualTo("postId", postId).addSnapshotListener((value, error) -> {
-                        if (document.get("postId").equals(postId))
-                        {
+                        if (document.get("postId").equals(postId)) {
                             interested.setImageResource(R.drawable.ic_check_circle_green);
+                            interested.setClickable(false);
                         }
                     });
+                }
             });
-//            Query get = collection.whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
-
 
             interested.setOnClickListener(v -> {
-                interested.setImageResource(R.drawable.ic_check_circle_green);
-                database.collection("joined").add(new Joined(this.postId, FirebaseAuth.getInstance().getCurrentUser().getUid()));
-                Toast.makeText(context, "ADDED SUCCESSFULLY TO CLIPBOARD", Toast.LENGTH_LONG).show();
+                    System.out.println("true");
+                    database.collection("joined").add(new Joined(this.postId, FirebaseAuth.getInstance().getCurrentUser().getUid()));
+                    interested.setImageResource(R.drawable.ic_check_circle_green);
+                    Toast.makeText(context, "ADDED SUCCESSFULLY TO CLIPBOARD", Toast.LENGTH_LONG).show();
+                    interested.setClickable(false);
             });
         }
     }

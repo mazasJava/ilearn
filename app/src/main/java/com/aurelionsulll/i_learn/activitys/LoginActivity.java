@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,13 +23,14 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private Button login;
     private TextView register;
-
+    private ProgressBar progressBar;
     private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        progressBar = findViewById(R.id.login_progressBar);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -38,38 +40,34 @@ public class LoginActivity extends AppCompatActivity {
         register = findViewById(R.id.register);
 
 
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(registerIntent);
-                finish();
-            }
+        register.setOnClickListener(v -> {
+            Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(registerIntent);
+            finish();
         });
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        login.setOnClickListener(v -> {
+            String loginEmail = email.getText().toString();
+            String loginPassword = password.getText().toString();
 
-                String loginEmail = email.getText().toString();
-                String loginPassword = password.getText().toString();
-
-                //if not empty
-                if (!TextUtils.isEmpty(loginEmail) && !TextUtils.isEmpty(loginPassword)) {
-                    //login with email and password
-                    mAuth.signInWithEmailAndPassword(loginEmail, loginPassword).addOnCompleteListener(task -> {
-                        //if success go to home page
-                        if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "LOGIN SUCCESS" , Toast.LENGTH_LONG).show();
-                            sendToMain();
-                        } else {
-                            String error = task.getException().getMessage();
-                            Toast.makeText(LoginActivity.this, "LOGIN ERROR : " + error, Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-
+            //if not empty
+            if (!TextUtils.isEmpty(loginEmail) && !TextUtils.isEmpty(loginPassword)) {
+                progressBar.setVisibility(View.VISIBLE);
+                //login with email and password
+                mAuth.signInWithEmailAndPassword(loginEmail, loginPassword).addOnCompleteListener(task -> {
+                    //if success go to home page
+                    if (task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, "LOGIN SUCCESS" , Toast.LENGTH_LONG).show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        sendToMain();
+                    } else {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        String error = task.getException().getMessage();
+                        Toast.makeText(LoginActivity.this, "LOGIN ERROR : " + error, Toast.LENGTH_LONG).show();
+                    }
+                });
             }
+
         });
     }
 

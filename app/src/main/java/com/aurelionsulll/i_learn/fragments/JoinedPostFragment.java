@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aurelionsulll.i_learn.R;
@@ -40,6 +42,7 @@ public class JoinedPostFragment extends Fragment {
     RecyclerView.LayoutManager layoutManager;
     private FirebaseFirestore database;
     List<Post> postList;
+    private ProgressBar progressBar;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,14 +88,16 @@ public class JoinedPostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_joined_post, container, false);
+        progressBar = view.findViewById(R.id.joined_post_progressBar);
+        postList = new ArrayList<Post>();
 
         Toolbar mainToolBar = view.findViewById(R.id.main_tool_bar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(mainToolBar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mainToolBar);
         mainToolBar.setTitleTextColor(Color.WHITE);
-        ((AppCompatActivity)getActivity()).setTitle("Joined posts");
+        ((AppCompatActivity) getActivity()).setTitle("Joined posts");
         mainToolBar.setBackground(Drawable.createFromPath("color/mainbgm"));
-
         setHasOptionsMenu(true);
+        progressBar.setVisibility(View.VISIBLE);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycleViewContainer);
         recyclerView.setHasFixedSize(true);
@@ -105,17 +110,19 @@ public class JoinedPostFragment extends Fragment {
                 for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
                     getPostDataCreatedByUser(queryDocumentSnapshot.get("postId").toString());
                 }
+                progressBar.setVisibility(View.INVISIBLE);
             } else {
+
                 Toast.makeText(getContext(), "Fail to get the data.", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         return view;
     }
 
     private void getPostDataCreatedByUser(String postId) {
         database.collection("posts").document(postId).get().addOnCompleteListener(task -> {
-            postList = new ArrayList<Post>();
             if (task.isSuccessful()) {
                 Post post = task.getResult().toObject(Post.class);
                 post.setId(task.getResult().getId());
@@ -128,6 +135,7 @@ public class JoinedPostFragment extends Fragment {
                 });
 
             } else {
+                progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(getContext(), "Fail to get the data.", Toast.LENGTH_SHORT).show();
             }
         });

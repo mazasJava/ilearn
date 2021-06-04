@@ -9,7 +9,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aurelionsulll.i_learn.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText confirmPassword;
     private Button register;
     private TextView login;
+    private ProgressBar progressBar;
 
     private FirebaseAuth mAuth;
 
@@ -33,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        progressBar = findViewById(R.id.register_progressBar);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -45,39 +49,37 @@ public class RegisterActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(loginIntent);
                 finish();
 
             }
         });
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String registerEmail = email.getText().toString();
-                String registerPassword = password.getText().toString();
-                String registerConfirmPassword = confirmPassword.getText().toString();
+        register.setOnClickListener(v -> {
+            String registerEmail = email.getText().toString();
+            String registerPassword = password.getText().toString();
+            String registerConfirmPassword = confirmPassword.getText().toString();
 
-                if (!TextUtils.isEmpty(registerEmail) && !TextUtils.isEmpty(registerPassword) && !TextUtils.isEmpty(registerConfirmPassword)) {
-
-                    if (registerPassword.equals(registerConfirmPassword)) {
-                        mAuth.createUserWithEmailAndPassword(registerEmail, registerPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Intent setupIntent = new Intent(RegisterActivity.this, SetupActivity.class);
-                                    startActivity(setupIntent);
-                                    finish();
-                                } else {
-                                    // error toast
-                                }
+            if (!TextUtils.isEmpty(registerEmail) && !TextUtils.isEmpty(registerPassword) && !TextUtils.isEmpty(registerConfirmPassword)) {
+                if (registerPassword.equals(registerConfirmPassword)) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    mAuth.createUserWithEmailAndPassword(registerEmail, registerPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Intent setupIntent = new Intent(RegisterActivity.this, SetupActivity.class);
+                                progressBar.setVisibility(View.GONE);
+                                startActivity(setupIntent);
+                                finish();
                             }
-                        });
-                    } else {
-                        // password != cPassword
-                    }
-
+                        }
+                    });
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(RegisterActivity.this, "Password and confirm password not matching ", Toast.LENGTH_LONG).show();
                 }
+            } else {
+                Toast.makeText(RegisterActivity.this, "One of the required fields is missing", Toast.LENGTH_LONG).show();
             }
         });
     }

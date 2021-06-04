@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,11 +25,13 @@ public class UpdateUserActivity extends AppCompatActivity {
     private Button saveButton, cancelButton;
     private FirebaseFirestore database;
     private Intent intent;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_user);
+        progressBar = findViewById(R.id.login_progressBar);
         imagePost = findViewById(R.id.imagePost);
         titlePost = findViewById(R.id.titlePost);
         descriptionPost = findViewById(R.id.descriptionPost);
@@ -49,14 +52,19 @@ public class UpdateUserActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         saveButton.setOnClickListener(v -> {
+            progressBar.setVisibility(View.VISIBLE);
             post.setTitle(titlePost.getText().toString());
             post.setDescription(descriptionPost.getText().toString());
             database.collection("posts").document(intent.getStringExtra("id")).set(post).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful())
+                    {
                         Toast.makeText(UpdateUserActivity.this, "Updated Successfully",
                                 Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    }
+
                     else
                         System.out.println("not working");
                 }

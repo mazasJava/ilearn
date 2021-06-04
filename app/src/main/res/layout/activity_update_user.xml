@@ -3,18 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/mainbg">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imagePost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toStartOf="@+id/titlePost"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,9 +27,10 @@
             android:id="@+id/titlePost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:layout_weight="1"
             android:height="50dp"
-            android:background="@android:drawable/editbox_background"
+            android:background="@drawable/componentbg"
             android:gravity="top"
             android:hint="Enter Title"
             android:lines="4"
@@ -43,8 +46,9 @@
             android:id="@+id/descriptionPost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:layout_weight="8"
-            android:background="@android:drawable/editbox_background"
+            android:background="@drawable/componentbg"
             android:gravity="top"
             android:hint="Enter Post Description"
             android:lines="4"
@@ -66,21 +70,40 @@
 
             <Button
                 android:id="@+id/saveButton"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
                 android:text="SAVE"
-                app:backgroundTint="#216CA5"
+                app:backgroundTint="@color/mainc"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
                 android:id="@+id/cancelButton"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"
                 android:text="CANCEL"
-                app:backgroundTint="#216CA5"
+                android:textColor="@color/mainc"
+                app:backgroundTint="#F5F5F5"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/login_progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:progressTint="#FFFFFF"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_tool_bar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

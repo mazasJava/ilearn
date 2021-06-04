@@ -15,9 +15,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.aurelionsulll.i_learn.R;
@@ -42,6 +44,7 @@ import java.util.Map;
 public class SetupActivity extends AppCompatActivity {
 
     private boolean isChanged = false;
+    private ProgressBar progressBar;
 
     private ImageView setupImage;
     private Uri mainImageURI = null;
@@ -59,7 +62,7 @@ public class SetupActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
-
+        progressBar = findViewById(R.id.setup_progressBar);
         MaterialToolbar toolbar = findViewById(R.id.setup_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Account setup");
@@ -80,7 +83,8 @@ public class SetupActivity extends AppCompatActivity {
         setupBtn.setOnClickListener(v -> {
             String user_name = setupName.getText().toString();
             if (isChanged) {
-                if (!TextUtils.isEmpty(user_name)) {
+                if (!TextUtils.isEmpty(user_name) && !TextUtils.isEmpty(mainImageURI.toString())) {
+                    progressBar.setVisibility(View.VISIBLE);
                     user_id = firebaseAuth.getCurrentUser().getUid();
                     StorageReference image_path = storageReference.child("profile_images").child(user_id + ".jpg");
                     image_path.putFile(mainImageURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -96,7 +100,7 @@ public class SetupActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    createProfile(null, user_name);
+                    Toast.makeText(SetupActivity.this, "One of the required fields is missing", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -154,10 +158,13 @@ public class SetupActivity extends AppCompatActivity {
 
                 {
                     Intent intent = new Intent(SetupActivity.this, MainActivity.class);
+                    progressBar.setVisibility(View.INVISIBLE);
                     startActivity(intent);
                 }
                 else
-                    System.out.println("not working");
+                {
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
             }
         });
     }

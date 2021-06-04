@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aurelionsulll.i_learn.R;
@@ -39,9 +41,8 @@ public class UserPostFragment extends Fragment {
     RecyclerView.LayoutManager layoutManager;
     private FirebaseFirestore database;
     List<Post> postList;
+    private ProgressBar progressBar;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -83,21 +84,23 @@ public class UserPostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_post, container, false);
-
+        postList = new ArrayList<Post>();
+        progressBar = view.findViewById(R.id.user_post_progressBar);
         mainToolBar = view.findViewById(R.id.main_tool_bar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(mainToolBar);
         mainToolBar.setTitleTextColor(Color.WHITE);
         ((AppCompatActivity)getActivity()).setTitle("My posts");
         mainToolBar.setBackground(Drawable.createFromPath("color/mainbgm"));
-
         setHasOptionsMenu(true);
+
+        progressBar.setVisibility(View.VISIBLE);
+
         if(isAdded()){
         recyclerView = (RecyclerView) view.findViewById(R.id.recycleViewContainer);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         database = FirebaseFirestore.getInstance();
-
             getPostDataCreatedByUser();
         }
 
@@ -106,7 +109,6 @@ public class UserPostFragment extends Fragment {
 
     private void getPostDataCreatedByUser() {
         database.collection("posts").whereEqualTo("user_id", FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(task -> {
-            postList = new ArrayList<Post>();
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     Post post = document.toObject(Post.class);
@@ -119,8 +121,9 @@ public class UserPostFragment extends Fragment {
                         recyclerView.setAdapter(mAdapter);
                     });
                 }
-
+                progressBar.setVisibility(View.INVISIBLE);
             } else {
+                progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(getContext(), "Fail to get the data.", Toast.LENGTH_SHORT).show();
             }
         });
