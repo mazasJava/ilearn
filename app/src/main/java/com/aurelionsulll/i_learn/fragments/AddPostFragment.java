@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.aurelionsulll.i_learn.activitys.LoginActivity;
@@ -38,6 +40,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import org.w3c.dom.Text;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -53,6 +57,7 @@ public class AddPostFragment extends Fragment {
     private FirebaseFirestore db;
     private FirebaseAuth firebaseAuth;
     private Uri mainImageURI = null;
+    private ProgressBar progressBar;
 
     private MaterialToolbar mainToolBar;
     private FirebaseAuth mAuth;
@@ -111,17 +116,18 @@ public class AddPostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.fragment_add_post, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_post, container, false);
 
+        progressBar = view.findViewById(R.id.add_post_progressBar);
         mAuth = FirebaseAuth.getInstance();
 
         mainToolBar = view.findViewById(R.id.main_tool_bar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(mainToolBar);
-        ((AppCompatActivity)getActivity()).setTitle("I learn");
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mainToolBar);
+        ((AppCompatActivity) getActivity()).setTitle("I learn");
         mainToolBar.setTitleTextColor(Color.WHITE);
         mainToolBar.setBackground(Drawable.createFromPath("color/mainbgm"));
 
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
 
         firebaseAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -139,12 +145,13 @@ public class AddPostFragment extends Fragment {
                     Toast.makeText(getContext(), "permission denied", Toast.LENGTH_LONG).show();
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                 } else {
-                    System.out.println("You already have permision to this ");
                     CropImage.activity()
                             .setGuidelines(CropImageView.Guidelines.ON)
                             .setAspectRatio(1, 1)
-                            .start(getContext(),AddPostFragment.this);
+                            .start(getContext(), AddPostFragment.this);
                 }
+                postImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
             }
         });
 
@@ -153,19 +160,25 @@ public class AddPostFragment extends Fragment {
             String description = postDescription.getText().toString();
             user_id = firebaseAuth.getCurrentUser().getUid();
             StorageReference image_path = storageReference.child("post_image").child(post_id + ".jpg");
-            image_path.putFile(mainImageURI).addOnSuccessListener(taskSnapshot -> image_path.getDownloadUrl().addOnSuccessListener(uri -> {
-                final Uri downloadUrl = uri;
-                System.out.println(uri);
-                System.out.println(downloadUrl);
-                createPost(downloadUrl, title,description);
-                Fragment fragment = new FragmentHome();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.navHostFragment, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }));
+            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description)) {
+                progressBar.setVisibility(View.VISIBLE);
+                image_path.putFile(mainImageURI).addOnSuccessListener(taskSnapshot -> image_path.getDownloadUrl().addOnSuccessListener(uri -> {
+                    final Uri downloadUrl = uri;
+                    System.out.println(uri);
+                    System.out.println(downloadUrl);
+                    createPost(downloadUrl, title, description);
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Fragment fragment = new FragmentHome();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.navHostFragment, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }));
+            } else {
+                Toast.makeText(getContext(), "One of the fields is missing ", Toast.LENGTH_LONG).show();
+            }
         });
-        return  view;
+        return view;
     }
 
     @Override
@@ -178,10 +191,7 @@ public class AddPostFragment extends Fragment {
             if (resultCode == Activity.RESULT_OK) {
                 assert result != null;
                 mainImageURI = result.getUri();
-            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++" + mainImageURI);
-
-            postImage.setImageURI(mainImageURI);
-            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++" + mainImageURI);
+                postImage.setImageURI(mainImageURI);
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 assert result != null;
             }
@@ -192,7 +202,7 @@ public class AddPostFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -229,5 +239,6 @@ public class AddPostFragment extends Fragment {
                 Objects.requireNonNull(user_id),
                 download_uri.toString());
         db.collection("posts").add(newPost);
+        Toast.makeText(getContext(), "Post created successfully", Toast.LENGTH_LONG).show();
     }
 }
