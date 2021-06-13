@@ -40,10 +40,10 @@ public class UpdateUserActivity extends AppCompatActivity {
         database = FirebaseFirestore.getInstance();
         intent = getIntent();
         getPostDataCreatedByUser(intent.getStringExtra("id"));
-        if(intent.getStringExtra("show").equals("1")){
+        if (intent.getStringExtra("show").equals("1")) {
             cancelButton.setVisibility(View.GONE);
             saveButton.setVisibility(View.GONE);
-        }else{
+        } else {
 
         }
     }
@@ -58,14 +58,11 @@ public class UpdateUserActivity extends AppCompatActivity {
             database.collection("posts").document(intent.getStringExtra("id")).set(post).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful())
-                    {
+                    if (task.isSuccessful()) {
                         Toast.makeText(UpdateUserActivity.this, "Updated Successfully",
                                 Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    }
-
-                    else
+                        progressBar.setVisibility(View.GONE);
+                    } else
                         System.out.println("not working");
                 }
             });

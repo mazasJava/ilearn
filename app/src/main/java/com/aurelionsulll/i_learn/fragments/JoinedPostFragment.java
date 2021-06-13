@@ -112,7 +112,6 @@ public class JoinedPostFragment extends Fragment {
                 }
                 progressBar.setVisibility(View.INVISIBLE);
             } else {
-
                 Toast.makeText(getContext(), "Fail to get the data.", Toast.LENGTH_SHORT).show();
             }
         });

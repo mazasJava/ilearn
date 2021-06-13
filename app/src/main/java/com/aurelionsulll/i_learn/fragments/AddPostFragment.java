@@ -158,7 +158,7 @@ public class AddPostFragment extends Fragment {
             String description = postDescription.getText().toString();
             user_id = firebaseAuth.getCurrentUser().getUid();
             StorageReference image_path = storageReference.child("post_image").child(post_id + ".jpg");
-            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description)) {
+            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(mainImageURI.toString())) {
                 progressBar.setVisibility(View.VISIBLE);
                 image_path.putFile(mainImageURI).addOnSuccessListener(taskSnapshot -> image_path.getDownloadUrl().addOnSuccessListener(uri -> {
                     final Uri downloadUrl = uri;

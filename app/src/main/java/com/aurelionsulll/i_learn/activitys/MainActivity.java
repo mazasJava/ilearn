@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             sendToLoginActivity();
         }
+        
         else{
             user_id = firebaseAuth.getCurrentUser().getUid();
             firebaseFirestore.collection("users").document(user_id).get().addOnCompleteListener(task -> {

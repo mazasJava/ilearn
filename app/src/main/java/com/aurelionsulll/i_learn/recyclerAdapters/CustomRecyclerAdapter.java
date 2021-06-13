@@ -97,8 +97,6 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             CollectionReference collection = db.collection("joined");
-            CollectionReference postCollection = db.collection("posts");
-
 
             DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("joined");
             scoresRef.keepSynced(true);
@@ -108,17 +106,21 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
 
 
             getUserId.get().addOnCompleteListener(task -> {
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    if (document.get("userId").equals(postUserID)) {
-                        interested.setVisibility(View.GONE);
-                    }
-                    task.getResult().getQuery().whereEqualTo("postId", postId).addSnapshotListener((value, error) -> {
-                        if (document.get("postId").equals(postId)) {
-                            interested.setImageResource(R.drawable.ic_check_circle_green);
-                            interested.setClickable(false);
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (document.get("userId").equals(postUserID)) {
+                            interested.setVisibility(View.GONE);
                         }
-                    });
+                        task.getResult().getQuery().whereEqualTo("postId", postId).addSnapshotListener((value, error) -> {
+                            if (document.get("postId").equals(postId)) {
+                                interested.setImageResource(R.drawable.ic_check_circle_green);
+                                interested.setClickable(false);
+                            }
+                        });
+                    }
                 }
+
+
             });
 
             interested.setOnClickListener(v -> {
